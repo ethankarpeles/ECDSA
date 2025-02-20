@@ -1,4 +1,4 @@
-from ecdsa import VerifyingKey
+from ecdsa import VerifyingKey, BadSignatureError
 
 def validate_code(product, signature, verifyingkey):
 
@@ -9,10 +9,13 @@ def validate_code(product, signature, verifyingkey):
 
     product = productfile.read()
     sig = sigfile.read()
-    if (vk.verify(sig, product)):
+    try:
+        if (vk.verify(sig, product)):
             print ("good")
             exec(open("product.py").read())
+        
+    except BadSignatureError:
+        print("Bad Signature")
+
+
     else: return False
-
-
-validate_code("product.py", "signature", "public.pem")
