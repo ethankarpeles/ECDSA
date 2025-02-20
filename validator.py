@@ -19,3 +19,5 @@ def validate_code(product, signature, verifyingkey):
 
 
     else: return False
+
+validate_code("product.py", "signature", "public.pem")
